@@ -62,7 +62,7 @@ private:
 
 	sf::Text consoleIn;
 
-	//void checkAns();
+	void checkAns();
 };
 
 
@@ -176,7 +176,8 @@ int Level_System::Run(sf::RenderWindow &App) {
 						writeFile << psstring;
 					}
 					writeFile.close();
-					//checkAns();
+					execCode(cPlayerString);
+					checkAns();
 					
 				}
 			}
@@ -371,11 +372,9 @@ sys.stderr = catchOutErr\n\
 	Py_Finalize();
 }
 
-/**
+
 void Level_System::checkAns()
 {
-	execCode(cPlayerString);
-
 	std::ifstream jIn("test.json");
 
 	json jSoIn;
@@ -384,22 +383,34 @@ void Level_System::checkAns()
 
 	std::string userComp;
 	std::string expectedComp;
-
-	if (jSoIn.find("expected-answer") != jSoIn.end())
-	{
-		userComp = jSoIn.at("expected-answer");
+	try {
+		if (jSoIn.find("expected-answer") != jSoIn.end())
+		{
+			userComp = jSoIn.at("expected-answer").is_string();
+			std::cout << userComp << std::endl;
+		}
 	}
-
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
 	/*
 	* Compare strings in two files
 	* If same, level passes
 	* If not, restart
-	
+	*/
+	std::string finalComp;
+
+	for (int i = 1; i < userComp.length() - 1; i++)
+	{
+		finalComp += userComp[i];
+	}
+
 	storeFile.open("store.txt");
 
 	while (storeFile >> expectedComp);
 
-	if (expectedComp == userComp)
+	if (expectedComp == finalComp)
 	{
 		std::cout << "The two strings are equal" << std::endl;
 	}
@@ -408,4 +419,3 @@ void Level_System::checkAns()
 	}
 
 }
-*/
