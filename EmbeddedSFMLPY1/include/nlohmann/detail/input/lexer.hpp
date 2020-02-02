@@ -14,6 +14,9 @@
 #include <nlohmann/detail/input/position_t.hpp>
 #include <nlohmann/detail/macro_scope.hpp>
 
+
+
+
 namespace nlohmann
 {
 namespace detail
@@ -1363,6 +1366,7 @@ scan_number_done:
         {
             if ('\x00' <= c and c <= '\x1F')
             {
+
                 // escape control characters
                 std::array<char, 9> cs{{}};
                 (std::snprintf)(cs.data(), cs.size(), "<U+%.4X>", static_cast<unsigned char>(c));

@@ -3,20 +3,21 @@
 * 
 */
 #pragma once
+
 #include <cstdlib>
 #include <Python.h>
 #include <string>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#undef snprintf
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include "cScreen.h"
 
-
 class Level_System : public cScreen {
 public:
-
+	using json = nlohmann::json;
 	sf::Font mainFont;
 
 
@@ -61,7 +62,7 @@ private:
 
 	sf::Text consoleIn;
 
-	void checkAns();
+	//void checkAns();
 };
 
 
@@ -175,7 +176,7 @@ int Level_System::Run(sf::RenderWindow &App) {
 						writeFile << psstring;
 					}
 					writeFile.close();
-					checkAns();
+					//checkAns();
 					
 				}
 			}
@@ -370,15 +371,41 @@ sys.stderr = catchOutErr\n\
 	Py_Finalize();
 }
 
+/**
 void Level_System::checkAns()
 {
 	execCode(cPlayerString);
+
+	std::ifstream jIn("test.json");
+
+	json jSoIn;
+
+	jIn >> jSoIn;
+
+	std::string userComp;
+	std::string expectedComp;
+
+	if (jSoIn.find("expected-answer") != jSoIn.end())
+	{
+		userComp = jSoIn.at("expected-answer");
+	}
 
 	/*
 	* Compare strings in two files
 	* If same, level passes
 	* If not, restart
-	*/
+	
+	storeFile.open("store.txt");
 
+	while (storeFile >> expectedComp);
+
+	if (expectedComp == userComp)
+	{
+		std::cout << "The two strings are equal" << std::endl;
+	}
+	else {
+		std::cout << "The two strings are not equal" << std::endl;
+	}
 
 }
+*/
