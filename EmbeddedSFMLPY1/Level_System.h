@@ -62,6 +62,9 @@ private:
 
 	sf::Text consoleIn;
 
+	//display if the program executed the right code or not
+	sf::Text afterCheck;
+
 	void checkAns();
 };
 
@@ -89,6 +92,10 @@ int Level_System::Run(sf::RenderWindow &App) {
 	consoleIn.setFillColor(sf::Color::White);
 	consoleIn.setString(">>>");
 	consoleIn.setPosition({ 100.f, 100.f });
+
+	afterCheck.setFont(mainFont);
+	afterCheck.setCharacterSize(24);
+	afterCheck.setFillColor(sf::Color::White);
 
 	sf::Texture textureBackground;
 	textureBackground.loadFromFile("capAssets/UI/Full_Background_Pixel.png");
@@ -245,7 +252,13 @@ int Level_System::Run(sf::RenderWindow &App) {
 		sf::Vector2f playPos = Player_Text.getPosition();
 		resultText.setPosition({ 100.f, playPos.y + offsetCount });
 
+		sf::Vector2f resultPos = resultText.getPosition();
+		afterCheck.setPosition({ 100.f, resultPos.y + 24 });
+
+
+
 		App.draw(resultText);
+		App.draw(afterCheck);
 		App.display();
 	}
 	return -1;
@@ -401,21 +414,31 @@ void Level_System::checkAns()
 	*/
 	std::string finalComp;
 
+	//this is required with finalComp
+	//because the parser reads in the string with quotation marks
+	//this removes the quotation marks from the expected answer
+	//in the JSON file.
 	for (int i = 1; i < userComp.length() - 1; i++)
 	{
 		finalComp += userComp[i];
 	}
 
+	//open the stored file with the answer
 	storeFile.open("store.txt");
 
+	//read in the file to a string
 	while (storeFile >> expectedComp);
 
+
+	//compare the strings
 	if (expectedComp == finalComp)
 	{
 		std::cout << "The two strings are equal" << std::endl;
+		afterCheck.setString("That code was right!");
 	}
 	else {
 		std::cout << "The two strings are not equal" << std::endl;
+		afterCheck.setString("That code is not quite right. Try again");
 	}
 
 }
