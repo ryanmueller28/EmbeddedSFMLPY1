@@ -1,6 +1,6 @@
 /*
 * Level_System.h
-* 
+*
 */
 #pragma once
 
@@ -79,7 +79,7 @@ int Level_System::Run(sf::RenderWindow &App) {
 	bool Running = true;
 	sf::Event event;
 	float offsetCount = 24;
-	
+
 	mainFont.loadFromFile("capAssets/Fonts/_bitmap_font____romulus_by_pix3m-d6aokem.ttf");
 
 	Player_Text.setFont(mainFont);
@@ -129,9 +129,9 @@ int Level_System::Run(sf::RenderWindow &App) {
 	/*
 	* Below:
 	* set positions for a button to execute the code
-	* and a button to execute the code and check it against 
+	* and a button to execute the code and check it against
 	* the answer for the problem
-	* 
+	*
 	*/
 	submitButton.setPosition({ 775, 775 });
 	execButton.setPosition({ 475, 775 });
@@ -143,8 +143,8 @@ int Level_System::Run(sf::RenderWindow &App) {
 	float execButtonHeight = execButton.getLocalBounds().height;
 
 	while (Running) {
-		
-		
+
+
 		while (App.pollEvent(event)) {
 
 			if (event.key.code == sf::Keyboard::Escape) {
@@ -172,7 +172,7 @@ int Level_System::Run(sf::RenderWindow &App) {
 					}
 					writeFile.close();
 					execCode(cPlayerString);
-					
+
 				}
 
 				if (event.mouseButton.button == sf::Mouse::Left && submitButton.getGlobalBounds().contains(mousePosF))
@@ -185,7 +185,7 @@ int Level_System::Run(sf::RenderWindow &App) {
 					writeFile.close();
 					execCode(cPlayerString);
 					checkAns();
-					
+
 				}
 			}
 
@@ -194,7 +194,7 @@ int Level_System::Run(sf::RenderWindow &App) {
 			* Below: Poll the keyboard entry in SFML
 			* Read in text near to real time and set the input string
 			* to the entries. Checks for unique unicode characters are listed.
-			* 
+			*
 			*/
 			if (event.type == sf::Event::TextEntered) {
 				if (event.text.unicode < 128) {
@@ -231,12 +231,12 @@ int Level_System::Run(sf::RenderWindow &App) {
 						psstring += static_cast<char>(event.text.unicode);
 						Player_Text.setString(psstring);
 					}
-					
+
 				}
 			}
 		}
 
-		
+
 
 		App.clear();
 		App.draw(spriteBackground);
@@ -262,7 +262,7 @@ int Level_System::Run(sf::RenderWindow &App) {
 		App.display();
 	}
 	return -1;
-	
+
 }
 
 
@@ -286,7 +286,7 @@ void Level_System::execCode(const char* cPlayerString)
 	else {
 
 		std::string stdOutErr =
-"import sys\n\
+			"import sys\n\
 class CatchOutErr:\n\
     def __init__(self):\n\
         self.value = ''\n\
@@ -333,8 +333,8 @@ sys.stderr = catchOutErr\n\
 
 		//convert Python String Object to C++ char*
 		const char* capChar = PyBytes_AS_STRING(encoded);
+
 		
-		//It is the wrong Python C API function. Searching for the right one.
 		std::string writeString(capChar);
 
 
@@ -351,8 +351,8 @@ sys.stderr = catchOutErr\n\
 		*
 		*/
 
-		
-		 sf::String sfResString(printCheck);
+
+		sf::String sfResString(printCheck);
 
 
 		resultText.setString(printCheck);
@@ -369,7 +369,6 @@ sys.stderr = catchOutErr\n\
 		* The typeid(resString).name() always returns proper structure for std::string.
 		* Returns string value of basic arithmetic functions in Python code:
 		* ex: 2 + 7 returns 9 as a string value
-
 		* Returns 'None' if a Python function such as print('string') is called.
 		*/
 		std::string s1 = sfResString.toAnsiString(std::locale());
@@ -397,9 +396,9 @@ void Level_System::checkAns()
 	std::string userComp;
 	std::string expectedComp;
 	try {
-		if (jSoIn.find("expected-answer") != jSoIn.end())
+		if (jSoIn.find("expectedAns") != jSoIn.end())
 		{
-			userComp = jSoIn.at("expected-answer").is_string();
+			userComp = jSoIn.at("expectedAns").is_string();
 			std::cout << userComp << std::endl;
 		}
 	}
