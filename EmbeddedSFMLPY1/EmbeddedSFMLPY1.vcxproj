@@ -108,7 +108,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Users\ryanm\source\repos\EmbeddedSFMLPY1\EmbeddedSFMLPY1\include;C:\Users\ryanm\source\repos\PyEmbedTest\PyEmbedTest\include;C:\Users\ryanm\Desktop\64SFML\SFML-2.5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ryanm\source\repos\EmbeddedSFMLPY1\EmbeddedSFMLPY1\include;C:\Users\ryanm\source\repos\EmbeddedSFMLPY1\EmbeddedSFMLPY1\pyInclude\include;C:\Users\ryanm\source\repos\PyEmbedTest\PyEmbedTest\include;C:\Users\ryanm\Desktop\64SFML\SFML-2.5.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SuppressStartupBanner>false</SuppressStartupBanner>
     </ClCompile>
     <Link>
